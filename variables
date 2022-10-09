@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+export MODEL_NAME='"test"'
+export MODEL_VERSION='"3.2.1"'
+export MODEL_PRECISION='"3.2"'
+export MODEL_TYPE='"foo"'
+export MODEL_LOSS='"bar"'
+export MODEL_OPTIMIZER='"baz"'
+export MODEL_EPOCHS=44
+export MODEL_BSTCH_SIZE=37
+export MODEL_VERBOSE=3
+export MODEL_SHUFFLE='"other"'
+export MODEL_RETURN_SEQ='"another"'
+export MODEL_SAVE_WEIGHTS='"idk"'
+export MODEL_LOAD_WEIGHTS='"done"'
+
+
+echo $MODEL_NAME
+echo $MODEL_VERSION
+echo $MODEL_PRECISION
+echo $MODEL_TYPE
+echo $MODEL_LOSS
+echo $MODEL_OPTIMIZER
+echo $MODEL_EPOCHS
+echo $MODEL_BSTCH_SIZE
+echo $MODEL_VERBOSE
+echo $MODEL_SHUFFLE
+echo $MODEL_RETURN_SEQ
+echo $MODEL_SAVE_WEIGHTS
+echo $MODEL_LOAD_WEIGHTS
+
+envsubst < mr-dataset-config.yaml > mr-ds-out.yaml
+

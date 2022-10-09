@@ -1,0 +1,39 @@
+kind: DataSetConfiguration
+apiVersion: client.uor-framework.io/v1alpha1
+collection:
+  schemaAddress: localhost:5001/mrschema:latest
+  files:
+    - file: "*.ipynb"
+      attributes:
+        model_name: $MODEL_NAME
+        model_version: $MODEL_VERSION
+        model_precision: $MODEL_PRECISION
+        model_type: $MODEL_TYPE
+        model_loss: $MODEL_LOSS
+        model_optimizer: $MODEL_OPTIMIZER
+        model_epochs: $MODEL_EPOCHS
+        model_bstch_size: $MODEL_BSTCH_SIZE
+        model_verbose: $MODEL_VERBOSE
+        model_shuffle: $MODEL_SHUFFLE
+        model_return_sequences: $MODEL_RETURN_SEQ
+        model_save_weights: $MODEL_SAVE_WEIGHTS
+        model_load_weights: $MODEL_LOAD_WEIGHTS
+        notebook: "notebook"
+        model: "no"
+    - file: "*.pkl"
+      attributes:
+        model_name: $MODEL_NAME
+        model_version: $MODEL_VERSION
+        model_precision: $MODEL_PRECISION
+        model_type: $MODEL_TYPE
+        model_loss: $MODEL_LOSS
+        model_optimizer: $MODEL_OPTIMIZER
+        model_epochs: $MODEL_EPOCHS
+        model_bstch_size: $MODEL_BSTCH_SIZE
+        model_verbose: $MODEL_VERBOSE
+        model_shuffle: $MODEL_SHUFFLE
+        model_return_sequences: $MODEL_RETURN_SEQ
+        model_save_weights: $MODEL_SAVE_WEIGHTS
+        model_load_weights: $MODEL_LOAD_WEIGHTS
+        model: "model"
+        notebook: "no"

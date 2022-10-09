@@ -1,0 +1,39 @@
+kind: DataSetConfiguration
+apiVersion: client.uor-framework.io/v1alpha1
+collection:
+  schemaAddress: localhost:5001/mrschema:latest
+  files:
+    - file: "*.ipynb"
+      attributes:
+        model_name: "test"
+        model_version: "3.2.1"
+        model_precision: "3.2"
+        model_type: "foo"
+        model_loss: "bar"
+        model_optimizer: "baz"
+        model_epochs: 44
+        model_bstch_size: 37
+        model_verbose: 3
+        model_shuffle: "other"
+        model_return_sequences: "another"
+        model_save_weights: "idk"
+        model_load_weights: "done"
+        notebook: true
+        model: false
+    - file: "*.pkl"
+      attributes:
+        model_name: "test"
+        model_version: "3.2.1"
+        model_precision: "3.2"
+        model_type: "foo"
+        model_loss: "bar"
+        model_optimizer: "baz"
+        model_epochs: 44
+        model_bstch_size: 37
+        model_verbose: 3
+        model_shuffle: "other"
+        model_return_sequences: "another"
+        model_save_weights: "idk"
+        model_load_weights: "done"
+        model: true
+        notebook: false
