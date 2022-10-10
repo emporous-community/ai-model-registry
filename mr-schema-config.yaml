@@ -15,5 +15,5 @@ schema:
     "model_return_sequences": "string"
     "model_save_weights": "string"
     "model_load_weights": "string"
-    "notebook": "string"
-    "model": "string"
+    "notebook": "boolean"
+    "model": "boolean"

@@ -18,8 +18,8 @@ collection:
         model_return_sequences: $MODEL_RETURN_SEQ
         model_save_weights: $MODEL_SAVE_WEIGHTS
         model_load_weights: $MODEL_LOAD_WEIGHTS
-        notebook: "notebook"
-        model: "no"
+        notebook: true
+        model: false
     - file: "*.pkl"
       attributes:
         model_name: $MODEL_NAME
@@ -35,5 +35,5 @@ collection:
         model_return_sequences: $MODEL_RETURN_SEQ
         model_save_weights: $MODEL_SAVE_WEIGHTS
         model_load_weights: $MODEL_LOAD_WEIGHTS
-        model: "model"
-        notebook: "no"
+        model: true
+        notebook: false
