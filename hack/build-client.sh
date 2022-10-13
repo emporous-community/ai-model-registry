@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # clone repo
+
 git clone https://github.com/uor-framework/uor-client-go && cd uor-client-go
 
 # build client
