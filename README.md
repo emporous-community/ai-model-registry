@@ -19,13 +19,26 @@ Download the ML model and verify the pulled contents.
 
 ## Step 1. Prep
 
-### a. Create a local registry for testing
+### a. Create a local registry for testing (example: [go-containerregistry](https://github.com/google/go-containerregistry))
 
 ```bash
-docker run --rm -d --name registry registry
+cat <<EOF > Dockerfile && docker build -t registry . && docker run -d -p 5000:5000 --name registry registry
+FROM --platform=x86_64 cgr.dev/chainguard/go:latest as build
+RUN GOBIN=/home/nonroot go install github.com/google/go-containerregistry/cmd/registry@latest
+
+FROM --platform=x86_64 cgr.dev/chainguard/go:latest
+
+COPY --from=build /home/nonroot/registry /registry
+EXPOSE 1338
+ENTRYPOINT ["/registry", "-port", "5000"]
+EOF
 ```
 
 ### b. Build binary from main branch (temporary)
+
+```bash
+git clone https://github.com/usrbinkat/uor-ai-model-registry ai-model-registry && cd ai-model-registry
+```
 
 ```bash
 docker run --rm -it \
@@ -40,38 +53,44 @@ docker run --rm -it \
 ### c. Verify client binary
 
 ```bash
-mv dist/client .
-./client version
+./dist/client version
 ```
 
 ### d. Build collection schema
 
 ```bash
-./client build schema mr-schema-config.yaml localhost:5000/mrschema:latest
+./dist/client build schema mr-schema-config.yaml localhost:5000/mrschema:latest
 ```
 
 ### e. Publish Schema
 
 ```bash
-./client push --plain-http=true localhost:5000/mrschema:latest
+./dist/client push --plain-http=true localhost:5000/mrschema:latest
 ```
 
-### c. 
+### f. Build collection
 
 ```bash
+source variables 
+./dist/client build collection collection/  localhost:5000/test/mrtest:latest --dsconfig ./mr-ds-out.yaml --plain-http=true
 ```
 
-### c. 
+### g. Push collection
 
 ```bash
+./dist/client push localhost:5000/test/mrtest:latest --plain-http=true
 ```
 
-### c. 
+### h. Check manifest
 
 ```bash
+curl localhost:5000/v2/test/mrtest/manifests/latest | jq
 ```
 
-### c. 
+### i. Pull specific object by it's `name` attribute
 
 ```bash
+./dist/client pull  localhost:5000/test/mrtest:latest -o /tmp/pull --plain-http=true --no-verify=true --attributes mr-attributes.yam
+
+cat /tmp/pull/model.pkl
 ```
