@@ -39,7 +39,7 @@ docker run -d -p 5000:5000 --name registry registry
 ### 2. Build binary from main branch (temporary)
 
 ```bash
-git clone https://github.com/usrbinkat/uor-ai-model-registry ai-model-registry && cd ai-model-registry
+git clone https://github.com/uor-community/ai-model-registry ai-model-registry && cd ai-model-registry
 ```
 
 ```bash
