@@ -19,24 +19,22 @@ Download the ML model and verify the pulled contents.
 
 ## Prep
 
-<details><summary>CLICK FOR PREREQUISITES</summary>
-<p>
-
 ### 1. Create a local registry for testing (example: [go-containerregistry](https://github.com/google/go-containerregistry))
 
 ```bash
-cat <<EOF > Dockerfile
-FROM cgr.dev/chainguard/go:latest
-RUN GOBIN=/home/nonroot go install github.com/google/go-containerregistry/cmd/registry@latest
-ENTRYPOINT ["/home/nonroot/registry", "-port", "5000"]
+cat <<EOF > Dockerfile && docker build -t registry . && docker run -d -p 5000:5000 --name registry registry
+FROM --platform=x86_64 cgr.dev/chainguard/go:latest-glibc as build
+RUN CGO_ENABLED=0 GOBIN=/home/nonroot go install github.com/google/go-containerregistry/cmd/registry@latest
+
+FROM --platform=x86_64 cgr.dev/chainguard/static:latest
+COPY --from=build /home/nonroot/registry /registry
+
+ENTRYPOINT ["/registry", "-port", "5000"]
+EXPOSE 5000
 EOF
-docker build -t registry .
-```
-```bash
-docker run -d -p 5000:5000 --name registry registry
 ```
 
-### 2. Build binary from main branch (temporary)
+### 2. Build UOR Reference client from main branch (temporary step)
 
 ```bash
 git clone https://github.com/uor-community/ai-model-registry ai-model-registry && cd ai-model-registry
@@ -57,9 +55,6 @@ docker run --rm -it --privileged \
 ```bash
 ./dist/client version
 ```
-
-</p>
-</details>
 
 ## Demo
 ### 1. Build collection schema
