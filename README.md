@@ -1,12 +1,12 @@
 # AI/ML Model Secure Publishing
 
-This demonstration uses the [UOR Framework reference cli](https://github.com/uor-framework/uor-client-go) to publish a machine learning (ML) model and associated artifacts directly to a container registry.
+This demonstration uses the [Emporous reference cli](https://github.com/emporous/emporous-go) to publish a machine learning (ML) model and associated artifacts directly to a container registry.
 
 > NOTICE: demo currently written for Linux x86_64
 
 ### Publish Artifacts
 
-Publish the following ML artifacts to a container registry as a UOR "collection". We will also sign the artifacts and publish signature certificates to establish provenance of the model's origin.
+Publish the following ML artifacts to a container registry as an Emporous "collection". We will also sign the artifacts and publish signature certificates to establish provenance of the model's origin.
 
 ### Retrieve Artifacts
 
@@ -34,10 +34,10 @@ EXPOSE 5000
 EOF
 ```
 
-### 2. Build UOR Reference client from main branch (temporary step)
+### 2. Build Emporous Reference client from main branch (temporary step)
 
 ```bash
-git clone https://github.com/uor-community/ai-model-registry ai-model-registry && cd ai-model-registry
+git clone https://github.com/emporous-community/ai-model-registry ai-model-registry && cd ai-model-registry
 ```
 
 ```bash
@@ -53,14 +53,14 @@ docker run --rm -it --privileged \
 ### 3. Verify client binary
 
 ```bash
-./dist/client version
+./dist/emporous version
 ```
 
 ## Demo
 ### 1. Build collection schema
 
 ```bash
-./dist/client build schema mr-schema-config.yaml localhost:5000/mrschema:latest
+./dist/emporous build schema mr-schema-config.yaml localhost:5000/mrschema:latest
 ```
 
 ### 2. Publish Schema
@@ -68,14 +68,14 @@ docker run --rm -it --privileged \
 - (optional) use the `--sign` flag as well to sign collection with sigstore
 
 ```bash
-./dist/client push --plain-http=true localhost:5000/mrschema:latest
+./dist/emporous push --plain-http=true localhost:5000/mrschema:latest
 ```
 
 ### 3. Build collection
 
 ```bash
 source variables 
-./dist/client build collection collection/  localhost:5000/test/mrtest:latest --dsconfig ./mr-ds-out.yaml --plain-http=true
+./dist/emporous build collection collection/  localhost:5000/test/mrtest:latest --dsconfig ./mr-ds-out.yaml --plain-http=true
 ```
 
 ### 4. Publish collection
@@ -83,7 +83,7 @@ source variables
 - (optional) use the `--sign` flag as well to sign collection with sigstore
 
 ```bash
-./dist/client push localhost:5000/test/mrtest:latest --plain-http=true
+./dist/emporous push localhost:5000/test/mrtest:latest --plain-http=true
 ```
 
 ### 5. Check manifest
@@ -100,9 +100,9 @@ curl localhost:5000/v2/test/mrtest/manifests/latest | jq
   "schemaVersion": 2,
   "mediaType": "application/vnd.oci.image.manifest.v1+json",
   "config": {
-    "mediaType": "application/vnd.uor.config.v1+json",
-    "digest": "sha256:478a694317a07753db2de5c74c9838390bcaee24dff20ffe2f88e3ce90495828",
-    "size": 883
+    "mediaType": "application/vnd.emporous.config.v1+json",
+    "digest": "sha256:a2c767fe51666883cf81420769fc27aa8fc0b2601cf31532d323c08828f1261d",
+    "size": 1129
   },
   "layers": [
     {
@@ -110,6 +110,7 @@ curl localhost:5000/v2/test/mrtest/manifests/latest | jq
       "digest": "sha256:10d77b9b5a4322cf38bb238f3a02c6410f539fd11dc9545fac2ade20ab39368f",
       "size": 18,
       "annotations": {
+        "emporous.attributes": "{\"ai-model\":{},\"converted\":{\"org.opencontainers.image.title\":\"random.file\"}}",
         "org.opencontainers.image.title": "random.file"
       }
     },
@@ -118,8 +119,8 @@ curl localhost:5000/v2/test/mrtest/manifests/latest | jq
       "digest": "sha256:214ebd05c7f7e74f53a630a8a020c88061ea776b650a5f64dc8997ef9a71ab75",
       "size": 5,
       "annotations": {
-        "org.opencontainers.image.title": "model.pkl",
-        "uor.attributes": "{\"model\":true,\"model_bstch_size\":37,\"model_epochs\":44,\"model_load_weights\":\"done\",\"model_loss\":\"bar\",\"model_name\":\"test\",\"model_optimizer\":\"baz\",\"model_precision\":\"3.2\",\"model_return_sequences\":\"another\",\"model_save_weights\":\"idk\",\"model_shuffle\":\"other\",\"model_type\":\"foo\",\"model_verbose\":3,\"model_version\":\"3.2.1\",\"notebook\":false}"
+        "emporous.attributes": "{\"ai-model\":{\"model\":true,\"model_bstch_size\":37,\"model_epochs\":44,\"model_load_weights\":\"done\",\"model_loss\":\"bar\",\"model_name\":\"test\",\"model_optimizer\":\"baz\",\"model_precision\":\"3.2\",\"model_return_sequences\":\"another\",\"model_save_weights\":\"idk\",\"model_shuffle\":\"other\",\"model_type\":\"foo\",\"model_verbose\":3,\"model_version\":\"3.2.1\",\"notebook\":false},\"converted\":{\"org.opencontainers.image.title\":\"model.pkl\"}}",
+        "org.opencontainers.image.title": "model.pkl"
       }
     },
     {
@@ -127,13 +128,13 @@ curl localhost:5000/v2/test/mrtest/manifests/latest | jq
       "digest": "sha256:23be9aed68166a1997b4396a6549f028d946b33fc2b68d56b8c297b84e973ebc",
       "size": 270,
       "annotations": {
-        "org.opencontainers.image.title": "notebook.ipynb",
-        "uor.attributes": "{\"model\":false,\"model_bstch_size\":37,\"model_epochs\":44,\"model_load_weights\":\"done\",\"model_loss\":\"bar\",\"model_name\":\"test\",\"model_optimizer\":\"baz\",\"model_precision\":\"3.2\",\"model_return_sequences\":\"another\",\"model_save_weights\":\"idk\",\"model_shuffle\":\"other\",\"model_type\":\"foo\",\"model_verbose\":3,\"model_version\":\"3.2.1\",\"notebook\":true}"
+        "emporous.attributes": "{\"ai-model\":{\"model\":false,\"model_bstch_size\":37,\"model_epochs\":44,\"model_load_weights\":\"done\",\"model_loss\":\"bar\",\"model_name\":\"test\",\"model_optimizer\":\"baz\",\"model_precision\":\"3.2\",\"model_return_sequences\":\"another\",\"model_save_weights\":\"idk\",\"model_shuffle\":\"other\",\"model_type\":\"foo\",\"model_verbose\":3,\"model_version\":\"3.2.1\",\"notebook\":true},\"converted\":{\"org.opencontainers.image.title\":\"notebook.ipynb\"}}",
+        "org.opencontainers.image.title": "notebook.ipynb"
       }
     }
   ],
   "annotations": {
-    "uor.schema": "localhost:5000/mrschema:latest"
+    "emporous.attributes": "{}"
   }
 }
 ```
@@ -144,7 +145,7 @@ curl localhost:5000/v2/test/mrtest/manifests/latest | jq
 ### 6. Pull specific object by it's `name` attribute
 
 ```bash
-./dist/client pull  localhost:5000/test/mrtest:latest -o /tmp/pull --plain-http=true --no-verify=true --attributes mr-attributes.yaml
+./dist/emporous pull  localhost:5000/test/mrtest:latest -o /tmp/pull --plain-http=true --no-verify=true --attributes mr-attributes.yaml
 
 cat /tmp/pull/model.pkl
 ```
