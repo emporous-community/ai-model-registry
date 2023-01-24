@@ -1,6 +1,6 @@
 # AI/ML Model Secure Publishing
 
-This demonstration uses the [Emporous reference cli](https://github.com/emporous-community/emporous-go) to publish a machine learning (ML) model and associated artifacts directly to a container registry.
+This demonstration uses the [Emporous reference cli](https://github.com/emporous/emporous-go) to publish a machine learning (ML) model and associated artifacts directly to a container registry.
 
 > NOTICE: demo currently written for Linux x86_64
 
