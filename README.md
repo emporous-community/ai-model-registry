@@ -101,8 +101,8 @@ curl localhost:5000/v2/test/mrtest/manifests/latest | jq
   "mediaType": "application/vnd.oci.image.manifest.v1+json",
   "config": {
     "mediaType": "application/vnd.emporous.config.v1+json",
-    "digest": "sha256:478a694317a07753db2de5c74c9838390bcaee24dff20ffe2f88e3ce90495828",
-    "size": 883
+    "digest": "sha256:a2c767fe51666883cf81420769fc27aa8fc0b2601cf31532d323c08828f1261d",
+    "size": 1129
   },
   "layers": [
     {
@@ -110,6 +110,7 @@ curl localhost:5000/v2/test/mrtest/manifests/latest | jq
       "digest": "sha256:10d77b9b5a4322cf38bb238f3a02c6410f539fd11dc9545fac2ade20ab39368f",
       "size": 18,
       "annotations": {
+        "emporous.attributes": "{\"ai-model\":{},\"converted\":{\"org.opencontainers.image.title\":\"random.file\"}}",
         "org.opencontainers.image.title": "random.file"
       }
     },
@@ -118,8 +119,8 @@ curl localhost:5000/v2/test/mrtest/manifests/latest | jq
       "digest": "sha256:214ebd05c7f7e74f53a630a8a020c88061ea776b650a5f64dc8997ef9a71ab75",
       "size": 5,
       "annotations": {
-        "org.opencontainers.image.title": "model.pkl",
-        "emporous.attributes": "{\"model\":true,\"model_bstch_size\":37,\"model_epochs\":44,\"model_load_weights\":\"done\",\"model_loss\":\"bar\",\"model_name\":\"test\",\"model_optimizer\":\"baz\",\"model_precision\":\"3.2\",\"model_return_sequences\":\"another\",\"model_save_weights\":\"idk\",\"model_shuffle\":\"other\",\"model_type\":\"foo\",\"model_verbose\":3,\"model_version\":\"3.2.1\",\"notebook\":false}"
+        "emporous.attributes": "{\"ai-model\":{\"model\":true,\"model_bstch_size\":37,\"model_epochs\":44,\"model_load_weights\":\"done\",\"model_loss\":\"bar\",\"model_name\":\"test\",\"model_optimizer\":\"baz\",\"model_precision\":\"3.2\",\"model_return_sequences\":\"another\",\"model_save_weights\":\"idk\",\"model_shuffle\":\"other\",\"model_type\":\"foo\",\"model_verbose\":3,\"model_version\":\"3.2.1\",\"notebook\":false},\"converted\":{\"org.opencontainers.image.title\":\"model.pkl\"}}",
+        "org.opencontainers.image.title": "model.pkl"
       }
     },
     {
@@ -127,13 +128,13 @@ curl localhost:5000/v2/test/mrtest/manifests/latest | jq
       "digest": "sha256:23be9aed68166a1997b4396a6549f028d946b33fc2b68d56b8c297b84e973ebc",
       "size": 270,
       "annotations": {
-        "org.opencontainers.image.title": "notebook.ipynb",
-        "emporous.attributes": "{\"model\":false,\"model_bstch_size\":37,\"model_epochs\":44,\"model_load_weights\":\"done\",\"model_loss\":\"bar\",\"model_name\":\"test\",\"model_optimizer\":\"baz\",\"model_precision\":\"3.2\",\"model_return_sequences\":\"another\",\"model_save_weights\":\"idk\",\"model_shuffle\":\"other\",\"model_type\":\"foo\",\"model_verbose\":3,\"model_version\":\"3.2.1\",\"notebook\":true}"
+        "emporous.attributes": "{\"ai-model\":{\"model\":false,\"model_bstch_size\":37,\"model_epochs\":44,\"model_load_weights\":\"done\",\"model_loss\":\"bar\",\"model_name\":\"test\",\"model_optimizer\":\"baz\",\"model_precision\":\"3.2\",\"model_return_sequences\":\"another\",\"model_save_weights\":\"idk\",\"model_shuffle\":\"other\",\"model_type\":\"foo\",\"model_verbose\":3,\"model_version\":\"3.2.1\",\"notebook\":true},\"converted\":{\"org.opencontainers.image.title\":\"notebook.ipynb\"}}",
+        "org.opencontainers.image.title": "notebook.ipynb"
       }
     }
   ],
   "annotations": {
-    "emporous.schema": "localhost:5000/mrschema:latest"
+    "emporous.attributes": "{}"
   }
 }
 ```
