@@ -1,6 +1,7 @@
 kind: SchemaConfiguration
-apiVersion: client.uor-framework.io/v1alpha1
+apiVersion: client.emporous.io/v1alpha1
 schema:
+  id: ai-model
   attributeTypes:
     "model_name": "string"
     "model_version": "string"
