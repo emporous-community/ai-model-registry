@@ -1,4 +1,6 @@
-cat <<EOF > Dockerfile && docker build -t registry . && docker run -d -p 5000:5000 --name registry registry
+run_cmd=$(command -pv podman || command -pv docker)
+
+cat <<EOF > Dockerfile && ${run_cmd} build -t registry . && ${run_cmd} run -d -p 5000:5000 --name registry registry
 FROM --platform=x86_64 cgr.dev/chainguard/go:latest as build
 RUN GOBIN=/home/nonroot go install github.com/google/go-containerregistry/cmd/registry@latest
 
@@ -9,16 +11,12 @@ EXPOSE 1338
 ENTRYPOINT ["/registry", "-port", "5000"]
 EOF
 
-git clone https://github.com/jpower432/ai-model-registry -b chore/update_name ai-model-registry && cd ai-model-registry
-
-run_cmd=$(command -pv podman || command -pv docker)
-
 ${run_cmd} run --rm -it \
           -v $(pwd)/dist/:/go/dist \
           -v $(pwd)/hack/build-client.sh:/go/build-client.sh \
           -e GOOS=$(uname | uname -s | awk '{print tolower($0)}') \
           -e GITHUB_REPOSITORY_OWNER=local \
-          --entrypoint sh build-client.sh \
+          --entrypoint ./build-client.sh \
         docker.io/goreleaser/goreleaser
 
 ./dist/emporous version
